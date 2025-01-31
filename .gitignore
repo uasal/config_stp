@@ -1,0 +1,61 @@
+# Byte-compiled and cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+.env/
+*.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Build and distribution directories
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# Package management files (Setuptools, Poetry, Pip)
+*.tox
+.tox/
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Git LFS (if using for large files)
+*.fits
+*.hdf5
+*.h5
+
+# Ignore Python package files that are generated
+config_pearl.egg-info/
+
+# Ignore compiled wheels and distribution archives
+*.tar.gz
+*.whl
+
