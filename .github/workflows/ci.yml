@@ -50,10 +50,20 @@ jobs:
         git commit -m "Update last successful commit hash"
         git push
 
-    - name: Retrieve Last Successful Commit
+    - name: Update README with Test Results
       run: |
-        LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
-        echo "LAST_SUCCESSFUL_COMMIT=$LAST_SUCCESSFUL_COMMIT" >> $GITHUB_ENV
+      LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
+      echo "LAST_SUCCESSFUL_COMMIT=$LAST_SUCCESSFUL_COMMIT" >> $GITHUB_ENV
+
+      # Replace the existing test results line instead of appending
+      sed -i "/### Test Results/{n;s|.*|**✅ Passed:** $PASSED_TESTS  |  **❌ Failed:** $FAILED_TESTS  |  **🔗 Last Successful Commit:** \`$LAST_SUCCESSFUL_COMMIT\`|}" README.md
+
+      git config --local user.email "github-actions[bot]@users.noreply.github.com"
+      git config --local user.name "github-actions[bot]"
+      git add README.md
+      git commit -m "Update README with latest test results"
+      git push
+
 
     - name: Update README with Test Results
       run: |
