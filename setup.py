@@ -6,6 +6,7 @@ setup(
     packages=find_packages(),
     install_requires=["toml"],
     include_package_data=True,
-    package_data={"config_pearl": ["config/observatory/*.toml"]},
+    package_data={
+        "config_pearl": ["config/**/*.toml"] # Include all TOML files inside config
+    }, 
 )
- 
