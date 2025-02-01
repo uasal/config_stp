@@ -37,39 +37,45 @@ jobs:
         FAILED=$(python -c "import re; f=open('pytest_output.txt').read(); print(re.search(r'(\d+) failed', f).group(1) if re.search(r'(\d+) failed', f) else 0)")
         
         COMMIT_HASH=$(git rev-parse HEAD)
+        COMMIT_DATE=$(git show -s --format=%cd --date=format:'%m/%d/%y' $COMMIT_HASH)
 
         # Store test results in GitHub environment variables
         echo "PASSED_TESTS=$PASSED" >> $GITHUB_ENV
         echo "FAILED_TESTS=$FAILED" >> $GITHUB_ENV
         echo "LATEST_COMMIT=$COMMIT_HASH" >> $GITHUB_ENV
+        echo "LATEST_COMMIT_DATE=$COMMIT_DATE" >> $GITHUB_ENV
 
     - name: Store Last Successful Commit (If All Tests Pass)
       if: env.FAILED_TESTS == '' || env.FAILED_TESTS == '0'
       run: |
-        echo "$LATEST_COMMIT" > last_successful_commit.txt
+        echo "$LATEST_COMMIT ($LATEST_COMMIT_DATE)" > last_successful_commit.txt
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add last_successful_commit.txt
-        git commit -m "Update last successful commit hash"
-        git push
+        git commit -m "Update lastest passing commit" || echo "No changes to commit"
+        git push || echo "No changes to push"
 
     - name: Retrieve Last Successful Commit
       run: |
-        LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
+        if [ -f last_successful_commit.txt ]; then
+          LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt)
+        else
+          LAST_SUCCESSFUL_COMMIT="N/A"
+        fi
         echo "LAST_SUCCESSFUL_COMMIT=$LAST_SUCCESSFUL_COMMIT" >> $GITHUB_ENV
+        echo "Last Successful Commit: $LAST_SUCCESSFUL_COMMIT"
 
     - name: Update README with Test Results
       run: |
         LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
 
-        sed -i -E "s|(\*\*✅ Passed:\*\* )[0-9]+(.*❌ Failed:\*\* )[0-9]+(.*🔗 Last Successful Commit:\*\* \`)[^ \`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LAST_SUCCESSFUL_COMMIT\4|" README.md
-
+        sed -i -E "s|(\*\*✅ Passed:\*\* )[0-9]+(.*❌ Failed:\*\* )[0-9]+(.*🔗 Last Successful Commit \()[^\)]+(\): \`)[^ \`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LAST_SUCCESSFUL_COMMIT\5|" README.md
+        
         echo "Updated README with Test Results:"
-        cat README.md | grep "### Test Results" -A 1  # Debugging: Print section from README
-
+        cat README.md | grep "### Test Results" -A 1
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add README.md
-        git commit -m "Update README with latest test results" || echo "No changes to commit"
+        git commit -m "Update README with test results" || echo "No changes to commit"
         git push || echo "No changes to push"
 
