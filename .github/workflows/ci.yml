@@ -70,7 +70,8 @@ jobs:
         cat README.md | grep "✅ Passed"
 
         # Perform the actual replacement
-        sed -i -E "s|✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*|✅ Passed: ${PASSED_TESTS//\//\\/}  |  ❌ Failed: ${FAILED_TESTS//\//\\/}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE//\//\\/}): ${LATEST_COMMIT//\//\\/}|g" README.md
+        sed -i -E "s#✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*#✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}#g" README.md
+
 
         echo "After Updating README.md:"
         cat README.md | grep "✅ Passed"
