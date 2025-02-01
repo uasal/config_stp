@@ -67,6 +67,24 @@ jobs:
         echo "LAST_SUCCESSFUL_COMMIT_DATE=$LAST_SUCCESSFUL_COMMIT_DATE" >> $GITHUB_ENV
         echo "Last Successful Commit: $LAST_SUCCESSFUL_COMMIT ($LAST_SUCCESSFUL_COMMIT_DATE)"  
 
+  - name: Debug `sed` Matching
+  run: |
+    echo "Before Updating README.md:"
+    cat README.md | grep "✅ Passed"
+
+    # Print the expected replacement line
+    echo "Expected Replacement: ✅ Passed: $PASSED_TESTS  |  ❌ Failed: $FAILED_TESTS  |  🔗 Last Passing Build ($LATEST_COMMIT_DATE): $LATEST_COMMIT"
+
+    # Debug if `sed` can find and replace the correct values
+    sed -nE "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LATEST_COMMIT_DATE\4$LATEST_COMMIT\5|gp" README.md
+
+    # Perform the actual replacement
+    sed -i -E "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LATEST_COMMIT_DATE\4$LATEST_COMMIT\5|g" README.md
+
+    echo "After Updating README.md:"
+    cat README.md | grep "✅ Passed"
+
+
     - name: Update README with Test Results
       run: |
         cat README.md | grep "✅ Passed:"
