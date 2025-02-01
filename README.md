@@ -24,8 +24,8 @@ After installation, you can test that the package works correctly by running the
 ```python
 from config_pearl import observatory_config
 
-print(observatory_config["telescope"]["fnum"])  # Output: 241.0
-print(observatory_config["WCC"]["FOV_w"])       # Output: '16.234arcminute'
+print(observatory_config["telescope"]["fnum"])  # Output: 15.0
+print(observatory_config["WCC"]["FOV_w"])       # Output: '13.75arcminute'
 ```
 
 other dicts available for import include
