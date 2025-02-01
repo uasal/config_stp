@@ -46,7 +46,6 @@ If you encounter issues, try the following:
   pip install .
   ```
 
-For further assistance, open an issue in the repository.
 
 ---
 
