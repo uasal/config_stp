@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # Adjust Python version as needed
+        python-version: '3.12'
 
     - name: Install Dependencies
       run: |
@@ -32,13 +32,12 @@ jobs:
       run: |
         pytest tests/ --tb=short --maxfail=1 --junitxml=report.xml | tee pytest_output.txt
         
-        # Extract Passed & Failed Test Counts Using Python
         PASSED=$(python -c "import re; f=open('pytest_output.txt').read(); print(re.search(r'(\d+) passed', f).group(1) if re.search(r'(\d+) passed', f) else 0)")
         FAILED=$(python -c "import re; f=open('pytest_output.txt').read(); print(re.search(r'(\d+) failed', f).group(1) if re.search(r'(\d+) failed', f) else 0)")
         
-        COMMIT_HASH=$(git rev-parse HEAD)
+        COMMIT_HASH=$(git rev-parse --short HEAD)
         COMMIT_DATE=$(git show -s --format=%cd --date=format:'%m/%d/%y' $COMMIT_HASH)
-
+        
         # Store test results in GitHub environment variables
         echo "PASSED_TESTS=$PASSED" >> $GITHUB_ENV
         echo "FAILED_TESTS=$FAILED" >> $GITHUB_ENV
@@ -46,36 +45,38 @@ jobs:
         echo "LATEST_COMMIT_DATE=$COMMIT_DATE" >> $GITHUB_ENV
 
     - name: Store Last Successful Commit (If All Tests Pass)
-      if: env.FAILED_TESTS == '' || env.FAILED_TESTS == '0'
+      if: env.FAILED_TESTS == '0'
       run: |
-        echo "$LATEST_COMMIT ($LATEST_COMMIT_DATE)" > last_successful_commit.txt
+        echo "$LATEST_COMMIT" > last_successful_commit.txt
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add last_successful_commit.txt
-        git commit -m "Update lastest passing commit" || echo "No changes to commit"
+        git commit -m "Update last successful commit hash" || echo "No changes to commit"
         git push || echo "No changes to push"
 
     - name: Retrieve Last Successful Commit
       run: |
         if [ -f last_successful_commit.txt ]; then
           LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt)
+          LAST_SUCCESSFUL_COMMIT_DATE=$(git show -s --format=%cd --date=format:'%m/%d/%y' $LAST_SUCCESSFUL_COMMIT)
         else
           LAST_SUCCESSFUL_COMMIT="N/A"
+          LAST_SUCCESSFUL_COMMIT_DATE="N/A"
         fi
         echo "LAST_SUCCESSFUL_COMMIT=$LAST_SUCCESSFUL_COMMIT" >> $GITHUB_ENV
-        echo "Last Successful Commit: $LAST_SUCCESSFUL_COMMIT"
+        echo "LAST_SUCCESSFUL_COMMIT_DATE=$LAST_SUCCESSFUL_COMMIT_DATE" >> $GITHUB_ENV
+        echo "Last Successful Commit: $LAST_SUCCESSFUL_COMMIT ($LAST_SUCCESSFUL_COMMIT_DATE)"  
 
     - name: Update README with Test Results
       run: |
-         LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
+        sed -i -E "s|(\*\*✅ Passed:\*\* )[0-9]+(.*❌ Failed:\*\* )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LAST_SUCCESSFUL_COMMIT_DATE\4$LAST_SUCCESSFUL_COMMIT\5|g" README.md
+        
+        echo "Updated README with Test Results:"
+        cat README.md | grep "### Test Results" -A 1  # Debugging
+        
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add README.md
+        git commit -m "Update README with latest test results and last successful commit date" || echo "No changes to commit"
+        git push || echo "No changes to push"
 
-         echo "Last Successful Commit stored: $LAST_SUCCESSFUL_COMMIT"
-
-         # Ensure `sed` replaces the correct section in `README.md`
-         sed -i -E "s|(\\*\\*✅ Passed:\\*\\* )[0-9]+(.*❌ Failed:\\*\\* )[0-9]+(.*🔗 Last Successful Commit \\()[^\\)]+(\\): \\`)[^ \\`]+(\\`)|\\1$PASSED_TESTS\\2$FAILED_TESTS\\3$LAST_SUCCESSFUL_COMMIT\\5|g" README.md
-
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add README.md
-          git commit -m "Update README with latest test results and last successful commit date" || echo "No changes to commit"
-          git push || echo "No changes to push"
