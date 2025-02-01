@@ -56,7 +56,7 @@ print(config_parsed["ifs"]["spectrograph"]["spectral_range"])
 from config_pearl import config_values_only
 
 print(config_values_only["observatory"]["telescope"]["jitter_rms"])  
-print(config_values_only["esc"]["ESC"]["D_chA_clear_OD"])  # This is gross
+print(config_values_only["esc"]["ESC"]["D_chA_clear_OD"])
 print(config_values_only["ifs"]["spectrograph"]["spectral_range"])
 ```
 
@@ -73,7 +73,7 @@ If you encounter issues, try the following:
   pip install .
   ```
 
-###If you'd like to print the whole dictionary in all 3 formats for a sanity check, you can borrow the following 
+If you'd like to print the whole dictionary in all 3 formats for a sanity check, you can borrow the following 
 ```python
 from config_pearl import config_raw, config_parsed, config_values_only
 import json
