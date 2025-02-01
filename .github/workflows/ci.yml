@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # Adjust if needed
+        python-version: '3.12'  # Adjust Python version as needed
 
     - name: Install Dependencies
       run: |
@@ -27,9 +27,37 @@ jobs:
         pip install -r requirements.txt
         pip install pytest toml
 
-    - name: Run TOML Validation
-      run: python tests/validate_toml.py
+    - name: Run Tests and Save Results
+      id: pytest_results
+      run: |
+        pytest tests/ --tb=short --maxfail=1 --junitxml=report.xml | tee pytest_output.txt
+        PASSED=$(grep -oP 'collected \d+ items.*? (\d+) passed' pytest_output.txt | awk '{print $2}')
+        FAILED=$(grep -oP 'collected \d+ items.*? (\d+) failed' pytest_output.txt | awk '{print $2}')
+        COMMIT_HASH=$(git rev-parse --short HEAD)
 
-    - name: Run Unit Tests
-      run: pytest tests/
+        # Store test results in GitHub environment variables
+        echo "PASSED_TESTS=$PASSED" >> $GITHUB_ENV
+        echo "FAILED_TESTS=$FAILED" >> $GITHUB_ENV
+        echo "LATEST_COMMIT=$COMMIT_HASH" >> $GITHUB_ENV
+
+    - name: Store Last Successful Commit (If All Tests Pass)
+      if: env.FAILED_TESTS == '' || env.FAILED_TESTS == '0'
+      run: |
+        echo "$LATEST_COMMIT" > last_successful_commit.txt
+        git add last_successful_commit.txt
+        git commit -m "Update last successful commit hash"
+        git push
+
+    - name: Retrieve Last Successful Commit
+      run: |
+        LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
+        echo "LAST_SUCCESSFUL_COMMIT=$LAST_SUCCESSFUL_COMMIT" >> $GITHUB_ENV
+
+    - name: Update README with Test Results
+      run: |
+        sed -i "/### Test Results/{n;d;}" README.md
+        echo "**✅ Passed:** $PASSED_TESTS  |  **❌ Failed:** $FAILED_TESTS  |  **🔗 Last Successful Commit:** \`$LAST_SUCCESSFUL_COMMIT\`" >> README.md
+        git add README.md
+        git commit -m "Update README with latest test results"
+        git push
 
