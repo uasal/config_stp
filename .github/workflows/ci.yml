@@ -51,18 +51,24 @@ jobs:
         echo "Extracted Test Results:"
         echo "PASSED: $PASSED"
         echo "FAILED: $FAILED"
-    
+
+    - name: Store Last Successful Commit (If Tests Pass)
+      if: env.PASSED_TESTS != '0' && env.FAILED_TESTS == '0'
+      run: |
+        echo "$LATEST_COMMIT" > last_successful_commit.txt
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add last_successful_commit.txt
+        git commit -m "Update last successful commit hash" || echo "No changes to commit"
+        git push || echo "No changes to push"
+
     - name: Update README with Test Results
       shell: bash
       run: |
         echo "Before Updating README.md:"
         cat README.md | grep "✅ Passed"
 
-        # Perform the actual replacement
-        #sed -i -E "s#✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*#✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}#g" README.md
-
         sed -i -E "s#✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*#✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): \`${LATEST_COMMIT}\`#g" README.md
-
 
         echo "After Updating README.md:"
         cat README.md | grep "✅ Passed"
@@ -72,3 +78,4 @@ jobs:
         git add -u
         git commit -m "Update README with latest test results and last successful commit date" || echo "No changes to commit"
         git push || echo "No changes to push"
+
