@@ -1,6 +1,6 @@
 # Pearl Config
 
-![CI Status](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/actions/workflows/ci.yml/badge.svg)
+![CI Status](https://github.com/adamschilperoort/config_pearl/actions/workflows/ci.yml/badge.svg)
 
 ### Test Results
 **✅ Passed:** 0  |  **❌ Failed:** 0  |  **🔗 Last Successful Build:** `N/A`
@@ -11,7 +11,8 @@
 The parser currently searches
 * observatory (config_pearl/config_pearl/config/observatory)
 * instruments (config_pearl/config_pearl/config/instruments)
-directories for .toml files and creates a dict where the first value is the name of the file and recursively adds values based on the .toml hierachy. Directories are hard-coded in the package, so this will need to be generalized if the tool will be viable for use by other repositories.  
+
+for .toml files and creates a dict where the first value is the name of the file, recursively adding values based on the .toml format hierarchy. Directories are hard-coded in the package, so this will need to be generalized if the tool will be viable for use by other repositories.  
 
 Currently only .toml files are being parsed, but may support other data types later.
 
