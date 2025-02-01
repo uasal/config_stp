@@ -34,7 +34,7 @@ jobs:
 
         # Extract test counts from pytest output
         PASSED=$(python -c "import re; f=open('pytest_output.txt').read(); match=re.search(r'(\d+) passed', f); print(match.group(1) if match else '0')")
-        FAILED=$(python -c "import re; f=open('pytest_output.txt').read(); match=re.search(r'(\d+) failed', f); print(match.group(1) if match else '0')")
+        FAILED=$(grep -oP '\d+(?= failed)' pytest_output.txt || echo "0")
 
         # Default values to 0 if empty
         PASSED=${PASSED:-0}
