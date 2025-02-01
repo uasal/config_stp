@@ -69,6 +69,7 @@ jobs:
 
     - name: Update README with Test Results
       run: |
+        cat README.md | grep "✅ Passed:"
         sed -i -E "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \\()[^)]*(\\): )[^\`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LATEST_COMMIT_DATE\4$LATEST_COMMIT\5|g" README.md
 
         echo "Updated README with Test Results:"
