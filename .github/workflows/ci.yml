@@ -51,18 +51,7 @@ jobs:
         echo "Extracted Test Results:"
         echo "PASSED: $PASSED"
         echo "FAILED: $FAILED"
-
-    - name: Debug `sed` Matching
-      run: |
-        echo "Before Updating README.md:"
-        cat README.md | grep "✅ Passed"
-
-        # Print the expected replacement line
-        echo "Expected Replacement: ✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}"
-
-        # Debug if `sed` can find and replace the correct values
-        sed -nE "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1${PASSED_TESTS}\2${FAILED_TESTS}\3${LATEST_COMMIT_DATE}\4${LATEST_COMMIT}\5|gp" README.md
-
+    
     - name: Update README with Test Results
       shell: bash
       run: |
@@ -70,7 +59,9 @@ jobs:
         cat README.md | grep "✅ Passed"
 
         # Perform the actual replacement
-        sed -i -E "s#✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*#✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}#g" README.md
+        #sed -i -E "s#✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*#✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}#g" README.md
+
+        sed -i -E "s#✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*#✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): \`${LATEST_COMMIT}\`#g" README.md
 
 
         echo "After Updating README.md:"
