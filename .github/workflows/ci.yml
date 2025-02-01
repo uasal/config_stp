@@ -60,11 +60,16 @@ jobs:
 
     - name: Update README with Test Results
       run: |
-        sed -i "/### Test Results/{n;s|.*|**✅ Passed:** $PASSED_TESTS  |  **❌ Failed:** $FAILED_TESTS  |  **🔗 Last Successful Commit:** \`$LAST_SUCCESSFUL_COMMIT\`|}" README.md
-        
+        LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
+
+        sed -i -E "s|(\*\*✅ Passed:\*\* )[0-9]+(.*❌ Failed:\*\* )[0-9]+(.*🔗 Last Successful Commit:\*\* \`)[^ \`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LAST_SUCCESSFUL_COMMIT\4|" README.md
+
+        echo "Updated README with Test Results:"
+        cat README.md | grep "### Test Results" -A 1  # Debugging: Print section from README
+
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add README.md
-        git commit -m "Update README with latest test results"
-        git push
+        git commit -m "Update README with latest test results" || echo "No changes to commit"
+        git push || echo "No changes to push"
 

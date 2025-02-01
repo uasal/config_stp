@@ -1,7 +1,5 @@
 # Pearl Config
 
-![CI Status](https://github.com/adamschilperoort/config_pearl/actions/workflows/ci.yml/badge.svg)
-
 ### Test Results
 
 **✅ Passed:** 0  |  **❌ Failed:** 0  |  **🔗 Last Successful Commit:** `N/A`
