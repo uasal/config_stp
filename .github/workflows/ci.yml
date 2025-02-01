@@ -33,8 +33,8 @@ jobs:
         pytest tests/ --tb=short --maxfail=1 --junitxml=report.xml | tee pytest_output.txt
 
         # Extract test counts from pytest output
-        PASSED=$(awk '/=+.*[0-9]+ passed.*=/ {print $3}' pytest_output.txt | head -n 1)
-        FAILED=$(awk '/=+.*[0-9]+ failed.*=/ {print $3}' pytest_output.txt | head -n 1)
+        PASSED=$(python -c "import re; f=open('pytest_output.txt').read(); match=re.search(r'(\d+) passed', f); print(match.group(1) if match else '0')")
+        FAILED=$(python -c "import re; f=open('pytest_output.txt').read(); match=re.search(r'(\d+) failed', f); print(match.group(1) if match else '0')")
 
         # Default values to 0 if empty
         PASSED=${PASSED:-0}
@@ -70,7 +70,8 @@ jobs:
         cat README.md | grep "✅ Passed"
 
         # Perform the actual replacement
-        sed -i -E "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1${PASSED_TESTS}\2${FAILED_TESTS}\3${LATEST_COMMIT_DATE}\4${LATEST_COMMIT}\5|g" README.md
+        sed -i -E "s|✅ Passed: [0-9]+  \|  ❌ Failed: [0-9]+  \|  🔗 Last Passing Build \(.*\): .*|✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}|g" README.md
+
 
         echo "After Updating README.md:"
         cat README.md | grep "✅ Passed"
