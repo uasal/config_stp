@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12'
+        python-version: '3.12`
 
     - name: Install Dependencies
       run: |
@@ -31,10 +31,14 @@ jobs:
       id: pytest_results
       run: |
         pytest tests/ --tb=short --maxfail=1 --junitxml=report.xml | tee pytest_output.txt
-        
-        # Extract Passed & Failed Test Counts Using Python
-        PASSED=$(grep -oP '(?<=, )\d+(?= passed)' pytest_output.txt || echo "0")
-        FAILED=$(grep -oP '(?<=, )\d+(?= failed)' pytest_output.txt || echo "0")
+
+        # Extract test counts from pytest output
+        PASSED=$(awk '/=+.*[0-9]+ passed.*=/ {print $3}' pytest_output.txt | head -n 1)
+        FAILED=$(awk '/=+.*[0-9]+ failed.*=/ {print $3}' pytest_output.txt | head -n 1)
+
+        # Default values to 0 if empty
+        PASSED=${PASSED:-0}
+        FAILED=${FAILED:-0}
 
         COMMIT_HASH=$(git rev-parse --short HEAD)
         COMMIT_DATE=$(git show -s --format=%cd --date=format:'%m/%d/%y' $COMMIT_HASH)
@@ -44,7 +48,7 @@ jobs:
         echo "LATEST_COMMIT=$COMMIT_HASH" >> $GITHUB_ENV
         echo "LATEST_COMMIT_DATE=$COMMIT_DATE" >> $GITHUB_ENV
 
-        echo "Extracted Test Results:" 
+        echo "Extracted Test Results:"
         echo "PASSED: $PASSED"
         echo "FAILED: $FAILED"
 
@@ -54,10 +58,10 @@ jobs:
         cat README.md | grep "✅ Passed"
 
         # Print the expected replacement line
-        echo "Expected Replacement: ✅ Passed: $PASSED_TESTS  |  ❌ Failed: $FAILED_TESTS  |  🔗 Last Passing Build ($LATEST_COMMIT_DATE): $LATEST_COMMIT"
+        echo "Expected Replacement: ✅ Passed: ${PASSED_TESTS}  |  ❌ Failed: ${FAILED_TESTS}  |  🔗 Last Passing Build (${LATEST_COMMIT_DATE}): ${LATEST_COMMIT}"
 
         # Debug if `sed` can find and replace the correct values
-        sed -nE "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LATEST_COMMIT_DATE\4$LATEST_COMMIT\5|gp" README.md
+        sed -nE "s|(✅ Passed: )[0-9]+(.*❌ Failed: )[0-9]+(.*🔗 Last Passing Build \()[^)]*(\): )[^\`]+(\`)|\1${PASSED_TESTS}\2${FAILED_TESTS}\3${LATEST_COMMIT_DATE}\4${LATEST_COMMIT}\5|gp" README.md
 
     - name: Update README with Test Results
       shell: bash
@@ -73,6 +77,6 @@ jobs:
 
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add README.md
+        git add -u
         git commit -m "Update README with latest test results and last successful commit date" || echo "No changes to commit"
         git push || echo "No changes to push"
