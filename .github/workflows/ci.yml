@@ -67,15 +67,15 @@ jobs:
 
     - name: Update README with Test Results
       run: |
-        LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
+         LAST_SUCCESSFUL_COMMIT=$(cat last_successful_commit.txt 2>/dev/null || echo "N/A")
 
-        sed -i -E "s|(\*\*✅ Passed:\*\* )[0-9]+(.*❌ Failed:\*\* )[0-9]+(.*🔗 Last Successful Commit \()[^\)]+(\): \`)[^ \`]+(\`)|\1$PASSED_TESTS\2$FAILED_TESTS\3$LAST_SUCCESSFUL_COMMIT\5|" README.md
-        
-        echo "Updated README with Test Results:"
-        cat README.md | grep "### Test Results" -A 1
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add README.md
-        git commit -m "Update README with test results" || echo "No changes to commit"
-        git push || echo "No changes to push"
+         echo "Last Successful Commit stored: $LAST_SUCCESSFUL_COMMIT"
 
+         # Ensure `sed` replaces the correct section in `README.md`
+         sed -i -E "s|(\\*\\*✅ Passed:\\*\\* )[0-9]+(.*❌ Failed:\\*\\* )[0-9]+(.*🔗 Last Successful Commit \\()[^\\)]+(\\): \\`)[^ \\`]+(\\`)|\\1$PASSED_TESTS\\2$FAILED_TESTS\\3$LAST_SUCCESSFUL_COMMIT\\5|g" README.md
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          git commit -m "Update README with latest test results and last successful commit date" || echo "No changes to commit"
+          git push || echo "No changes to push"
