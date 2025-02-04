@@ -3,12 +3,8 @@ import re
 from pathlib import Path
 
 class ConfigLoader:
-    """Class to load and process multiple TOML configuration files into a structured dictionary."""
 
     def __init__(self, base_dirs):
-        """
-        :param base_dirs: List of directories containing TOML files.
-        """
         self.base_dirs = [Path(d) for d in base_dirs]
 
     def load_all_configs(self, parse_units: bool = False, values_only: bool = False):
@@ -52,8 +48,6 @@ class ConfigLoader:
             return float(num) if values_only else {"value": float(num), "unit": unit} if unit else float(num)
         return value  # Return as-is if it doesn't match the expected format
 
-
-# Define directories where TOML files are stored
 config_directories = [
     Path(__file__).parent / "config" / "observatory",
     Path(__file__).parent / "config" / "instruments"
@@ -61,7 +55,7 @@ config_directories = [
 
 config_loader = ConfigLoader(config_directories)
 
-# Load all configurations in three modes
+# 3 different modes loaded into objects from 'load_all_configs'
 config_raw = config_loader.load_all_configs(parse_units=False)
 config_parsed = config_loader.load_all_configs(parse_units=True)
 config_values_only = config_loader.load_all_configs(parse_units=True, values_only=True)
