@@ -1,5 +1,3 @@
-# Pearl Config
-
 ## Overview
 `config_pearl` is a Python package that provides access to observatory, instrument, and astrophysics configuration data stored in TOML format. Currently there are 3 data formats this package makes available, "raw" which returns a dictionary of strings as whatever format they're stored in, "parsed" which reads .toml files and separates out 'value' and 'unit', and "unitless" which parses the input string and removes any units. See examples below for how to grab each format. 
 
