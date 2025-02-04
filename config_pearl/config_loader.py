@@ -49,8 +49,7 @@ class ConfigLoader:
         return value  # Return as-is if it doesn't match the expected format
 
 config_directories = [
-    Path(__file__).parent / "config" / "observatory",
-    Path(__file__).parent / "config" / "instruments"
+        Path(__file__).parent / "config" 
 ]
 
 config_loader = ConfigLoader(config_directories)

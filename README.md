@@ -2,7 +2,7 @@
 `config_pearl` is a Python package that provides access to observatory, instrument, and astrophysics configuration data stored in TOML format. Currently there are 3 data formats this package makes available, "raw" which returns a dictionary of strings as whatever format they're stored in, "parsed" which reads .toml files and separates out 'value' and 'unit', and "unitless" which parses the input string and removes any units. See examples below for how to grab each format. 
 
 The parser currently searches
-* config_pearl/config/observatory
+* config_pearl/config/
 
 for .toml files and creates a dict where the first value is the name of the file, recursively adding values based on the .toml format hierarchy. Directories are hard-coded in the package, so this will need to be generalized if the tool will be viable for use by other repositories.  
 
@@ -29,14 +29,10 @@ Once installed, you can import `config_raw` `config_parsed` or `config_values_on
 from config_pearl import config_raw
 
 print(config_raw["observatory"]["telescope"]["jitter_rms"])
-print(config_raw["esc"]["ESC"]["D_chA_clear_OD"])
-print(config_raw["ifs"]["spectrograph"]["spectral_range"])
 ```
 Expected output:
 ```
 10e-3arcsecond
-2.430m
-[4000, 17000]
 ```
 
 ### Parsed
@@ -44,14 +40,10 @@ Expected output:
 from config_pearl import config_parsed
 
 print(config_parsed["observatory"]["telescope"]["jitter_rms"])  
-print(config_parsed["esc"]["ESC"]["D_chA_clear_OD"])  
-print(config_parsed["ifs"]["spectrograph"]["spectral_range"])
 ```
 Expected output:
 ```
 {'value': 0.01, 'unit': 'arcsecond'}
-{'value': 2.43, 'unit': 'm'}
-[4000, 17000]
 ```
 
 ### Unitless
@@ -59,14 +51,10 @@ Expected output:
 from config_pearl import config_values_only
 
 print(config_values_only["observatory"]["telescope"]["jitter_rms"])  
-print(config_values_only["esc"]["ESC"]["D_chA_clear_OD"])
-print(config_values_only["ifs"]["spectrograph"]["spectral_range"])
 ```
 Expected output:
 ```
 0.01
-2.43
-[4000, 17000]
 ```
 
 ## Troubleshooting

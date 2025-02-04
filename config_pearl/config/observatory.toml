@@ -58,18 +58,3 @@ M4_C = 2.65 #power law exponent
 M4_rms_surface = '5e-9m'
 M4_coating_stddev = 0.005
 
-
-# Since the wavefront and context camera (WCC) is integral to the telescope it is defined here. 
-# Other instruments have their own files
-[WCC]
-FOV_w  = '13.75arcminute'
-FOV_h  = '5.16arcminute'
-CMOS_QE = "sensors/ZWO_ASI6200MM/ZWO_ASI6200MM_Pro_QE_curve.fits" #ZWO sensor characterization of Sony IMX455, pending UA ITL validation
-CMOS_dark = "sensors/ZWO_ASI6200MM/ZWO_ASI6200MM_Pro_Dark_Current_vs_Sensor_Temperature.csv"
-CMOS_gain = "sensors/ZWO_ASI6200MM/ZWO_ASI6200MM_Pro_Gain_vs_Gain_Setting.csv"
-CMOS_read = "sensors/ZWO_ASI6200MM/ZWO_ASI6200MM_Pro_Read_Noise_vs_Gain_Setting.csv"
-CMOS_well = "sensors/ZWO_ASI6200MM/ZWO_ASI6200MM_Pro_Well_Depth_vs_Gain_Setting.csv"
-T_nominal = '20Celsius'
-T_nominal_range = '1Kelvin'
-T_stability = '0.1Kelvin/hour'
-pixel_size = '3.76micron'

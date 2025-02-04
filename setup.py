@@ -7,6 +7,6 @@ setup(
     install_requires=["toml"],
     include_package_data=True,
     package_data={
-        "config_pearl": ["config/**/*.toml"] # Include all TOML files inside config
+        "config_pearl": ["config/*.toml"] # Include all TOML files inside config
     }, 
 )
