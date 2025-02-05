@@ -1,60 +1,22 @@
-# This is a TOML baseline observatory configuration in SI units
+# This is the refactored TOML baseline observatory configuration in SI units
 
-title = "Observatory Baseline Configuration"
+description = "Pearl Spacecraft Baseline Configuration"
 
-[telescope]
-fnum = 15.0
+[pointing]
 jitter_rms = '10e-3arcsecond'
-OpticalDesign = 'TMA_Mark_12F' #Daewook Kim's Space Coronagraph Optical Team Design
+field_of_regard_min = ''
+field_of_regard_max = ''
 
-# primary mirror properties
-D_aperture = '6.42m' # astronomically useful polished telescope clear aperture 
-D_M1_clear_ID = '1.38m' # astronomical polished M1 inner diameter
-M1_rms_surface = '21e-9m' # spec from STP M1 Specification (stp202401_0003)
-M1_rms_surface_goal = '9.4e-9m' # stretch goal from STP M1 Specification (stp202401_0003)
-M1_refl = "coatings/NIST_1st_surface_Al.csv" # NIST reference curve for aged bare aluminum
-Field_Bias = '0.17degree'
-M1_T_nominal = '20Celsius'
-M1_T_nominal_range = '1Kelvin'
-M1_T_stability = '0.01kelvin/hour'
-M1_coating_stddev = 0.02
+[motion]
+slew_settle_time_small = "5minutes"
+slew_settle_time_large = "90minutes"
+slew_avg_speed = "1 degree/second"
 
-# secondary properties
-D_secondary = '1.38m' # CBE of diameter of secondary baffle obscuration
-support_width = '0.15m' # CBE for secondary support baffle width
-n_supports = 3 # CBE for number of spider legs 
-D_M2_clear_ID = '0.760m' # optical clear aperture
-M2_refl ="coatings/NIST_1st_surface_Al.csv" # CBE 
-M2_T_nominal = '-35Celsius' # CBE
-M2_T_nominal_range = '20Celsius' # +/- this value
-M2_T_stability = '0.05Kelvin/hour'
-M2_rms_surface = '8e-9m' # L4-FOA-M2-1003
-M2_B = 10 # cycles/m - L4-FOA-M2-1004
-M2_C = 2.65 #power law exponent - L4-FOA-M2-1004
-M2_coating_stddev = 0.005
+[acquisition]
+offset_motion_time_fine = "30seconds"
+offset_motion_time_coarse = "120seconds"
+offset_measure_time_fine = "10seconds"
+offset_measure_time_coarse = "60seconds"
 
-
-# tertiary mirror properties
-D_M3_clear_ID_w = '0.560m'
-D_M3_clear_ID_h = '0.360m'
-M3_refl = "coatings/NIST_1st_surface_Al.csv"
-M3_T_nominal = '10Celsius' # CBE, set point assumed by past models
-M3_T_nominal_range = '10Kelvin' # WAG 
-M3_T_stability = '0.05Kelvin/hour' # WAG
-M3_rms_surface = '5e-9m'
-M3_B = 10 # cycles/m
-M3_C = 2.65 #power law exponent
-M3_coating_stddev = 0.005
-
-
-# quaternary mirror properties
-D_M4_clear_ID = '0.100m'
-M4_refl = "coatings/NIST_1st_surface_Al.csv"
-M4_T_nominal = '1Celsius' # CBE
-M4_T_nominal_range = '20Kelvin' # CBE
-M4_T_stability = '0.05Kelvin/hour'
-M4_B = 10 # cycles/m
-M4_C = 2.65 #power law exponent
-M4_rms_surface = '5e-9m'
-M4_coating_stddev = 0.005
-
+[general]
+mission_length = "3years"
