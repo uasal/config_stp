@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  check-tomls-python3-12:
     runs-on: ubuntu-latest
 
     steps:
