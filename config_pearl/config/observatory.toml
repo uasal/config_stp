@@ -8,9 +8,9 @@ field_of_regard_min = ''
 field_of_regard_max = ''
 
 [motion]
-slew_settle_time_small = "5minutes"
-slew_settle_time_large = "90minutes"
-slew_avg_speed = "1 degree/second"
+slew_settle_time_small = "5minutes" # from L3-7009
+slew_settle_time_large = "90minutes" # from transient response budget (TBR)
+slew_avg_speed = "0.44 degree/second" # estimate from JDP, does not include settling
 
 [acquisition]
 offset_motion_time_fine = "30seconds"
