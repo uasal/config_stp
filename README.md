@@ -1,68 +1,78 @@
-## Overview
-`config_pearl` is a Python package that provides access to observatory, instrument, and astrophysics configuration data stored in TOML format. Currently there are 3 data formats this package makes available, "raw" which returns a dictionary of strings as whatever format they're stored in, "parsed" which reads .toml files and separates out 'value' and 'unit', and "unitless" which parses the input string and removes any units. See examples below for how to grab each format. 
+# config_stp
 
-The parser currently searches
-* config_pearl/config/
+Space Telescope Pathfinder repository for support data and configuration management as an installable python package.
+The repository supersedes the stp_reference_data (private) repository which is now deprecated and soon to be archived.
+ 
+The [main](https://github.com/uasal/config_stp/tree/main) branch of this repo is under STP change control. The [develop](https://github.com/uasal/config_stp/tree/develop) branch is currently the default to enable rapid development of systems engineering budgets but the default will be changed to main once baseline observatory design is frozen. Changes to main require code owner approval, changes to the develop branch require approval of two other team members.
 
-for .toml files and creates a dict where the first value is the name of the file, recursively adding values based on the .toml format hierarchy. Directories are hard-coded in the package, so this will need to be generalized if the tool will be viable for use by other repositories.  
+Details on the change control process are found in the [coronograph design documentation repository](https://github.com/uasal/spacecoron_design_docs)
 
-## Installation Instructions
+This repository contains reference data for the observatory and telescope.
+The data in the repository is intended to encapsulate all parameters which represent the high-level system and are to be identical when called by the the various tools/simulators.
+This includes details of the telescope optical system, such as coatings and sensors, and observatory properties such as slew times.
+A synthetic dataset regarding the timeseries for the wavefront error due the thermal effects is also available.
 
-### **1. Clone the Repository**
-To get started, clone this repository using:
+The parameters for each subsystem are found in the `configs` directory.
+A description of how configurations are used in UASAL software, users can find an example notebook in the  [config_project_template](https://github.com/uasal/config_project_template) repository. 
+The example demonstrates how to load the TOML parameter files in a Python script.
+TOML files are human readable configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
+
+## Dependencies
+config_stp is dependent on [utils_config](https://github.com/uasal/utils_config) but will be automatically installed. 
+
+## Installation
+ssh keys are required for the pip-based install. Verify you have ssh keys installed in GitHub, or check out this [ssh key tutorial](https://github.com/uasal/lab_documents/blob/main/ssh_key_tutorial.md)
+
+### Pip-based install
 ```sh
-git clone git@github.com:uasal/config_pearl.git
-cd config_pearl
+pip install git+ssh://git@github.com/uasal/config_stp.git
 ```
 
-### **2. Install the Package**
-Once inside the project directory, install the package using:
+### Installed via cloning
 ```sh
+git clone git@github.com:uasal/config_stp.git
+cd config_stp
 pip install .
 ```
 
-## Usage and Verifying the Installation
-Once installed, you can import `config_raw` `config_parsed` or `config_values_only` as shown below. If unable to import, the pip installation has failed or you are in a different environment. You may have cloned a bad commit state, so verify the commit hash matches the latest 'stable' commit reported in the 'Test Results' section. An official release version will be added later. 
-
-### Raw
+## Usage
+config_stp makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml files.
 ```python
-from config_pearl import ConfigLoader
-
-loader = ConfigLoader("config_pearl/config_pearl/config","raw",recursive=True) #relative path from where you run the tool
-config_parsed = loader.load_configs()
-print(config_parsed["observatory"]["telescope"]["jitter_rms"])
+import config_stp
+data = config_stp.load_config_values()
+print(data["observatory"]["pointing"]["jitter_rms"])
 ```
 
-## Troubleshooting
-If you encounter issues, try the following:
-- Ensure you are running Python 3.12
-- Check that `pip list | grep config_pearl` confirms the package is installed
-- Uninstall and reinstall using:
-  ```sh
-  pip uninstall config_pearl
-  pip install .
-  ```
+load_config_values() has a default argument of 'raw' or alternatively pass in one of the three viable arguments for how values should be presented: 
+- `load_config_values('unitless')` -> 0.01
+- `load_config_values('parsed')` -> {'value': 0.01, 'unit': 'arcsecond'}
+- `load_config_values('raw')` -> 10e-3arcsecond
 
-If you'd like to print the whole dictionary in all 3 formats for a sanity check, you can borrow the following 
+For importing data and keeping code consistent across installs, config_stp will return the path to support_data with `get_data_path()`
 ```python
-from config_pearl import ConfigLoader
-import json
-
-config_raw = ConfigLoader("config_pearl/config_pearl/config","raw").load_configs() 
-config_parsed = ConfigLoader("config_pearl/config_pearl/config","parsed").load_configs()
-config_unitless = ConfigLoader("config_pearl/config_pearl/config","unitless").load_configs()
-
-def print_dict(title, data):
-    """Print pearl dictionary for all 3 formats -- json formatted!"""
-    print(json.dumps(data, indent=4, sort_keys=True))
-
-if __name__ == "__main__":
-    print("\n===========   {raw}   ===========")
-    print_dict("Raw Astropy TOML Data", config_raw)
-    print("\n===========  {parsed}  ===========")
-    print_dict("Parsed TOML Data (Value + Unit)", config_parsed)
-    print("\n=========== {unitless} ===========")
-    print_dict("Values-Only TOML Data", config_unitless)
+import config_stp
+data_path = config_stp.get_data_path()
+print(data_path)
 ```
 
----
+### Version Reporting
+
+For the reporting configuration versions in analyses (to aid in repeatability), the method `check_imports_and_versions` is available inside [utils_config](https://github.com/uasal/utils_config) that generates a nice summary. 
+
+## Astropy Unit Validation
+
+All .toml config values should have a valid astropy unit if any units are defined. If no unit is included, the value is assumed to be unitless. A GitHub CI will automatically run a test on push to validate astropy units in the configs, reporting any issues with non-conforming astropy units. If you'd like to perform validation locally, you may run `pytest tests/test_configs.py` from the root directory of the repo. Alternatively in your python environment you may run the following snippet:
+```python
+import config_stp
+config_stp.load_config_values("parsed", return_loader=True).validate_astropy()
+```
+Which will return 'True' if every unit is a valid astropy unit, or a list containing every invalid unit. If you would like to use a custom u
+nit, click [here](https://docs.astropy.org/en/stable/units/combining_and_defining.html#defining-units) for how to define that as a custom unit in Astropy. 
+
+## Git large file storage (LFS)
+
+This repository makes use of the git large file storage for files listed in the `.gitattributes` file.
+Accessing these files will require users having [Git Large File Storage (LFS)](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed on their local machine.
+
+If you have Git LFS installed, then the large files will be pulled by default.
+This can be disabled in your gitconfig, as described [at this link](https://stackoverflow.com/questions/42019529/how-to-clone-pull-a-git-repository-ignoring-lfs).
