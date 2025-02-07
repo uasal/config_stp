@@ -6,11 +6,12 @@ title = "Observatory Baseline Configuration"
 f_number = 15.0 # [unitless] (derived from Zemax by Heejoo)
 f_eff = "96.3m" # effective focal length at center of FoV (derived from Zemax by Heejoo)
 version = 'TMA_Mark_12F' #Daewook Kim's Space Coronagraph Optical Team Design
-field_Bias = '0.17degree' #FIXME- what is this? where does it come from? Who uses it?
+field_bias = '0.17degree' # Derived from Zemax, used in WCC ray trace
 design_wavelength = '633.0nm' # Must verify that the optical design uses this.
 
+[optics]
 # primary mirror properties
-[m1]
+[optics.m1]
 aper_clear_OD = '6.42m' # astronomically useful polished telescope clear aperture 
 aper_clear_ID = '1.38m' # astronomical polished M1 inner diameter
 surf_rms = '21e-9m' # L4-FOA-M1-1003 - spec from STP M1 Specification (stp202401_0003)
@@ -22,7 +23,7 @@ coating_refl = "support_data/telescope/coatings/NIST_1st_surface_Al.csv" # NIST 
 coating_refl_rms = 0.02 
 
 # secondary properties
-[m2]
+[optics.m2]
 aper_clear_OD = '0.760m' # optical clear aperture
 aper_clear_ID = '0.0m'
 surface_rms = '8e-9m' # spec from L4-FOA-M2-1003
@@ -40,7 +41,7 @@ support_width = '0.15m' # CBE for secondary support baffle width
 n_supports = 3 # CBE for number of spider legs 
 
 # tertiary mirror properties
-[m3]
+[optics.m3]
 aper_clear_w = '0.560m' # optical clear aperture width
 aper_clear_h = '0.360m' # optical clear aperture height
 surface_rms = '5e-9m' # - from esc design guide
@@ -54,7 +55,7 @@ coating_refl = "support_data/telescope/coatings/NIST_1st_surface_Al.csv" # NIST 
 coating_refl_rms = 0.005
 
 # quaternary mirror properties
-[m4]
+[optics.m4]
 aper_clear_OD = '0.100m'
 aper_clear_ID = '0.0m'
 surface_rms = '5e-9m' # - from esc design guide
