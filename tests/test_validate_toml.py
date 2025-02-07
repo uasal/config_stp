@@ -8,12 +8,12 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 # Define required config directories (adjusted for absolute paths)
 CONFIG_DIRECTORIES = [
-    PROJECT_ROOT / "config"
+    PROJECT_ROOT / "config_pearl" / "config"
     # add new directories here that are mandatory
 ]
 
 DATA_DIRECTORIES = [
-    PROJECT_ROOT / "data" 
+    PROJECT_ROOT / "config_pearl" / "data" 
 ]
 
 @pytest.mark.parametrize("folder", CONFIG_DIRECTORIES)
