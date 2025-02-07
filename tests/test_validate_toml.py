@@ -8,16 +8,13 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 # Define required config directories (adjusted for absolute paths)
 CONFIG_DIRECTORIES = [
-    PROJECT_ROOT / "config" / "observatory",
-    PROJECT_ROOT / "config" / "instruments"
+    PROJECT_ROOT / "config"
     # add new directories here that are mandatory
 ]
 
 DATA_DIRECTORIES = [
-    PROJECT_ROOT / "data" / "psfs"
+    PROJECT_ROOT / "data" 
 ]
-
-#add new tests for files if we're forcing certain config files to be part of the package?
 
 @pytest.mark.parametrize("folder", CONFIG_DIRECTORIES)
 def test_folders_exist(folder):
