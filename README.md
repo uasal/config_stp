@@ -26,40 +26,16 @@ Once installed, you can import `config_raw` `config_parsed` or `config_values_on
 
 ### Raw
 ```python
-from config_pearl import config_raw
+from config_pearl import ConfigLoader
 
-print(config_raw["observatory"]["telescope"]["jitter_rms"])
-```
-Expected output:
-```
-10e-3arcsecond
-```
-
-### Parsed
-```python
-from config_pearl import config_parsed
-
-print(config_parsed["observatory"]["telescope"]["jitter_rms"])  
-```
-Expected output:
-```
-{'value': 0.01, 'unit': 'arcsecond'}
-```
-
-### Unitless
-```python
-from config_pearl import config_values_only
-
-print(config_values_only["observatory"]["telescope"]["jitter_rms"])  
-```
-Expected output:
-```
-0.01
+loader = ConfigLoader("config_pearl/config_pearl/config","raw",recursive=True) #relative path from where you run the tool
+config_parsed = loader.load_configs()
+print(config_parsed["observatory"]["telescope"]["jitter_rms"])
 ```
 
 ## Troubleshooting
 If you encounter issues, try the following:
-- Ensure you are running Python 3.x
+- Ensure you are running Python 3.12
 - Check that `pip list | grep config_pearl` confirms the package is installed
 - Uninstall and reinstall using:
   ```sh
@@ -69,8 +45,12 @@ If you encounter issues, try the following:
 
 If you'd like to print the whole dictionary in all 3 formats for a sanity check, you can borrow the following 
 ```python
-from config_pearl import config_raw, config_parsed, config_values_only
+from config_pearl import ConfigLoader
 import json
+
+config_raw = ConfigLoader("config_pearl/config_pearl/config","raw").load_configs() 
+config_parsed = ConfigLoader("config_pearl/config_pearl/config","parsed").load_configs()
+config_unitless = ConfigLoader("config_pearl/config_pearl/config","unitless").load_configs()
 
 def print_dict(title, data):
     """Print pearl dictionary for all 3 formats -- json formatted!"""
@@ -82,7 +62,7 @@ if __name__ == "__main__":
     print("\n===========  {parsed}  ===========")
     print_dict("Parsed TOML Data (Value + Unit)", config_parsed)
     print("\n=========== {unitless} ===========")
-    print_dict("Values-Only TOML Data", config_values_only)
+    print_dict("Values-Only TOML Data", config_unitless)
 ```
 
 ---
