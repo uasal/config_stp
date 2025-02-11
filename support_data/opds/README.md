@@ -1,4 +1,4 @@
-OPD MAPS ARE CURRENTLY NOT SUPPORTED BY GIT LFS. THIS WILL CHANGE SOON!!!
+OPD maps are not currently available via git-lfs. 
 
 In the meantime, OPD maps can be downloaded from [Box](https://arizona.app.box.com/folder/245321428353).
 
