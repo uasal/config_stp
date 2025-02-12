@@ -5,14 +5,44 @@ The [main](https://github.com/uasal/config_pearl/tree/main) branch of this repo 
 Details on the change control process are found in the [coronograph design documentation repository](https://github.com/uasal/spacecoron_design_docs)
 
 This repository contains reference data for the observatory and telescope.
-The data in the repository is mean to encapsulate all parameters which represent the high-level system and are to be identical when called by the the various tools/simulators.
-This includes things like information about the telescope optical system, such as coatings and sensors, and observatory properties such as slew times.
+The data in the repository is intended to encapsulate all parameters which represent the high-level system and are to be identical when called by the the various tools/simulators.
+This includes details of the telescope optical system, such as coatings and sensors, and observatory properties such as slew times.
 A synthetic dataset regarding the timeseries for the wavefront error due the thermal effects is also available.
 
-The parameters for each subsystem are found in the `config` directory.
+The parameters for each subsystem are found in the `configs` directory.
 A description of how configurations are used in UASAL software, users can find an example notebook in the `docs` directory of the  [config_project_template](https://github.com/uasal/config_project_template) repository. 
 The example demonstrates how to load the TOML parameter files in a Python script.
 TOML files are human readible configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
+
+## Dependencies
+config_pearl is dependent on *utils_config* so please verify installation of that tool first: [https://github.com/uasal/utils_config]
+
+## Installation
+
+### **1. Clone the Repoistory**
+```sh
+git clone git@github.com:uasal/config_pearl.git
+cd utils_config
+```
+
+### **2. Install the Package**
+```sh
+pip install .
+```
+
+## Usage
+config_pearl makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml filies
+```python
+from config_pearl import config_loader
+data = config_loader.load_config_values()
+print(data["observatory"]["pointing"]["jitter_rms"])
+```
+
+load_config_values() has a default argument of 'raw' or alternatively pass in one of the three viable arguments for how values should be presented: 
+- load_config_values('unitless') -> 0.01
+- load_config_values('parsed') -> {'value': 0.01, 'unit': 'arcsecond'}
+- load_config_values('raw') -> 10e-3arcsecond
+
 
 ## Git large file storage (LFS)
 
