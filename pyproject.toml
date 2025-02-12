@@ -2,6 +2,7 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta" 
 
+<<<<<<< Updated upstream
 #[project]
 #name = "config_pearl"
 #version = "0.1.0"
@@ -13,3 +14,18 @@ build-backend = "setuptools.build_meta"
 #[tool.setuptools.package-data]
 #"config_pearl" = ["configs/*.toml"]
 
+=======
+[project]
+name = "config_pearl"
+version = "0.1.0"
+dependencies = [
+    "utils_config",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["config_pearl*"]
+
+[tool.setuptools.package-data]
+config_pearl = ["configs/*.toml"]
+>>>>>>> Stashed changes
