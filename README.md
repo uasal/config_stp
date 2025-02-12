@@ -15,14 +15,14 @@ The example demonstrates how to load the TOML parameter files in a Python script
 TOML files are human readible configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
 
 ## Dependencies
-config_pearl is dependent on *utils_config* so please verify installation of that tool first: [https://github.com/uasal/utils_config]
+config_pearl is dependent on *utils_config* so please verify installation of that tool first: https://github.com/uasal/utils_config
 
 ## Installation
 
 ### **1. Clone the Repoistory**
 ```sh
 git clone git@github.com:uasal/config_pearl.git
-cd utils_config
+cd config_pearl
 ```
 
 ### **2. Install the Package**
@@ -39,9 +39,9 @@ print(data["observatory"]["pointing"]["jitter_rms"])
 ```
 
 load_config_values() has a default argument of 'raw' or alternatively pass in one of the three viable arguments for how values should be presented: 
-- load_config_values('unitless') -> 0.01
-- load_config_values('parsed') -> {'value': 0.01, 'unit': 'arcsecond'}
-- load_config_values('raw') -> 10e-3arcsecond
+- `load_config_values('unitless')` -> 0.01
+- `load_config_values('parsed')` -> {'value': 0.01, 'unit': 'arcsecond'}
+- `load_config_values('raw')` -> 10e-3arcsecond
 
 
 ## Git large file storage (LFS)
