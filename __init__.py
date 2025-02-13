@@ -1,7 +1,4 @@
-import sys
-import os
+from .config_loader import load_config_values
 
-# Ensure the project root is in sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-import config_pearl
+def get_config():
+    return load_config_values()
