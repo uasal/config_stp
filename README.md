@@ -19,7 +19,7 @@ config_pearl is dependent on [utils_config](https://github.com/uasal/utils_confi
 
 ## Installation
 
-### **1. Clone the Repoistory**
+### **1. Clone the Repository**
 ```sh
 git clone git@github.com:uasal/config_pearl.git
 cd config_pearl
