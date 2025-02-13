@@ -15,7 +15,7 @@ The example demonstrates how to load the TOML parameter files in a Python script
 TOML files are human readible configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
 
 ## Dependencies
-config_pearl is dependent on *utils_config* so please verify installation of that tool first: https://github.com/uasal/utils_config
+config_pearl is dependent on [utils_config](https://github.com/uasal/utils_config) so please verify installation of that tool first: 
 
 ## Installation
 
