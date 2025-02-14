@@ -43,6 +43,12 @@ load_config_values() has a default argument of 'raw' or alternatively pass in on
 - `load_config_values('parsed')` -> {'value': 0.01, 'unit': 'arcsecond'}
 - `load_config_values('raw')` -> 10e-3arcsecond
 
+For importing data and keeping code consistent across installs, config_pearl will return the path to support_data with `get_data_path()`
+```python
+import config_pearl
+data_path = config_pearl.get_data_path()
+print(data_path)
+``` 
 
 ## Git large file storage (LFS)
 
