@@ -59,3 +59,5 @@ config_pearl.egg-info/
 *.tar.gz
 *.whl
 
+# Ignore setuptools_scm version file
+_version.py

@@ -1,17 +1,43 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "setuptools-scm", "wheel"]
 build-backend = "setuptools.build_meta" 
 
 [project]
 name = "config_pearl"
-version = "0.1.0"
+description = "Master config loader for pearl project at UASAL"
+readme = "README.md"
+license = {file = "LICENSE" } 
+requires-python = ">=3.8"
 dependencies = [
-    "utils_config",
+    "utils_config @ git+ssh://git@github.com/uasal/utils_config.git@develop" 
 ]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/uasal/config_pearl/blob/main/README.md"
+Changelog = "https://github.com/uasal/config_pearl/blob/main/CHANGELOG.md"
+Repository = "https://github.com/uasal/config_pearl"
+
+[tool.setuptools]
+py-modules = ["config_pearl", "config_loader"]
+package-dir = {"" = "."}
+
+[tool.setuptools_scm]
+write_to = "_version.py"
+version_scheme = "post-release"
+local_scheme = "node-and-date"
+
+[tool.pytest.ini_options]
+testpaths = [
+	"tests",
+]
+
+[tool.coverage.run]
+omit=["_version.py"]
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["config_pearl*"]
 
 [tool.setuptools.package-data]
-config_pearl = ["configs/*.toml"]
+"*" = ["configs/*.toml"]
