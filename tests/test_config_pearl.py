@@ -15,7 +15,7 @@ def test_version_consistency():
     if package_version != module_version:
         pytest.warns(UserWarning, f"Version mismatch: __version__={module_version}, metadata.version={package_version}")
 
-    assert module_version == package_version, "Versions should match. Verify package is up-to-date."
+    assert module_version == package_version, f"Version mismatch: __version__={module_version}, metadata.version={package_version}. Verify package is up-to-date."
 
 
 @pytest.mark.parametrize("toml_file", CONFIGS_PATH.glob("*.toml"))
