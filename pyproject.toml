@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "config_pearl"
 description = "Master config loader for pearl project at UASAL"
 readme = "README.md"
-license = {file = "LICENSE" } 
+license = { text = "GNU GENERAL PUBLIC LICENSE - Verison 3" }
 requires-python = ">=3.8"
 dependencies = [
     "utils_config @ git+ssh://git@github.com/uasal/utils_config.git@develop" 
@@ -19,8 +19,9 @@ Changelog = "https://github.com/uasal/config_pearl/blob/main/CHANGELOG.md"
 Repository = "https://github.com/uasal/config_pearl"
 
 [tool.setuptools]
-py-modules = ["config_pearl", "config_loader"]
+py-modules = ["config_pearl"]
 package-dir = {"" = "."}
+include-package-data = true
 
 [tool.setuptools_scm]
 write_to = "_version.py"
@@ -40,4 +41,5 @@ where = ["."]
 include = ["config_pearl*"]
 
 [tool.setuptools.package-data]
-"*" = ["configs/*.toml"]
+#"*" = ["configs/*.toml"]
+"*" = ["support_data/**/*"]
