@@ -41,5 +41,4 @@ where = ["."]
 include = ["config_pearl*"]
 
 [tool.setuptools.package-data]
-#"*" = ["configs/*.toml"]
 "*" = ["support_data/**/*"]
