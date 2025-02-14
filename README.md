@@ -33,8 +33,8 @@ pip install .
 ## Usage
 config_pearl makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml filies
 ```python
-from config_pearl import config_loader
-data = config_loader.load_config_values()
+import config_pearl
+data = config_pearl.load_config_values()
 print(data["observatory"]["pointing"]["jitter_rms"])
 ```
 
