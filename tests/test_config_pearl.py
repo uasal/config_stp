@@ -4,8 +4,7 @@ import config_pearl
 import toml
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
-CONFIGS_PATH = PROJECT_ROOT / "configs"
+CONFIGS_PATH = Path(config_pearl.__file__).parent / "configs"
 
 def test_version_consistency():
     """Ensure __version__ and importlib.metadata.version report the same value."""
@@ -13,8 +12,7 @@ def test_version_consistency():
     module_version = config_pearl.__version__
     assert module_version == package_version, f"Version mismatch: __version__={module_version}, metadata.version={package_version}. Verify package is up-to-date."
 
-
-@pytest.mark.parametrize("toml_file", CONFIGS_PATH.glob("*.toml"))
+@pytest.mark.parametrize("toml_file", list(CONFIGS_PATH.glob("*.toml")))
 def test_toml_files_valid(toml_file):
     """Ensure all .toml files in configs/ are a valid TOML format."""
     try:
