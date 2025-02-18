@@ -23,7 +23,7 @@ packages = ["config_stp"]
 include-package-data = true
 
 [tool.setuptools_scm]
-write_to = "_version.py"
+write_to = "config_stp/_version.py"
 version_scheme = "post-release"
 local_scheme = "node-and-date"
 
@@ -33,7 +33,7 @@ testpaths = [
 ]
 
 [tool.coverage.run]
-omit=["_version.py"]
+omit=["config_stp/_version.py"]
 
 [tool.setuptools.package-data]
 "config_stp" = ["support_data/**/*", "configs/**/*.toml"]
