@@ -1,15 +1,15 @@
 import pytest
 import importlib.metadata
-import config_pearl
+import config_stp
 import toml
 from pathlib import Path
 
-CONFIGS_PATH = Path(config_pearl.__file__).parent / "configs"
+CONFIGS_PATH = Path(config_stp.__file__).parent / "configs"
 
 def test_version_consistency():
     """Ensure __version__ and importlib.metadata.version report the same value."""
-    package_version = importlib.metadata.version("config_pearl")
-    module_version = config_pearl.__version__
+    package_version = importlib.metadata.version("config_stp")
+    module_version = config_stp.__version__
     assert module_version == package_version, f"Version mismatch: __version__={module_version}, metadata.version={package_version}. Verify package is up-to-date."
 
 @pytest.mark.parametrize("toml_file", list(CONFIGS_PATH.glob("*.toml")))

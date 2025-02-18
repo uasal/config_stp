@@ -53,7 +53,7 @@ desktop.ini
 *.h5
 
 # Ignore Python package files that are generated
-config_pearl.egg-info/
+config_stp.egg-info/
 
 # Ignore compiled wheels and distribution archives
 *.tar.gz
