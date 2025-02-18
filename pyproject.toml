@@ -3,8 +3,8 @@ requires = ["setuptools", "setuptools-scm", "wheel"]
 build-backend = "setuptools.build_meta" 
 
 [project]
-name = "config_pearl"
-description = "Master config loader for pearl project at UASAL"
+name = "config_stp"
+description = "Master config loader for stp project at UASAL"
 readme = "README.md"
 license = { text = "GNU GENERAL PUBLIC LICENSE - Verison 3" }
 requires-python = ">=3.8"
@@ -14,12 +14,12 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/uasal/config_pearl/blob/main/README.md"
-Changelog = "https://github.com/uasal/config_pearl/blob/main/CHANGELOG.md"
-Repository = "https://github.com/uasal/config_pearl"
+Homepage = "https://github.com/uasal/config_stp/blob/main/README.md"
+Changelog = "https://github.com/uasal/config_stp/blob/main/CHANGELOG.md"
+Repository = "https://github.com/uasal/config_stp"
 
 [tool.setuptools]
-packages = ["config_pearl"]
+packages = ["config_stp"]
 include-package-data = true
 
 [tool.setuptools_scm]
@@ -36,4 +36,4 @@ testpaths = [
 omit=["_version.py"]
 
 [tool.setuptools.package-data]
-"config_pearl" = ["support_data/**/*", "configs/**/*.toml"]
+"config_stp" = ["support_data/**/*", "configs/**/*.toml"]
