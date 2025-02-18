@@ -19,8 +19,7 @@ Changelog = "https://github.com/uasal/config_pearl/blob/main/CHANGELOG.md"
 Repository = "https://github.com/uasal/config_pearl"
 
 [tool.setuptools]
-py-modules = ["config_pearl"]
-package-dir = {"" = "."}
+packages = ["config_pearl"]
 include-package-data = true
 
 [tool.setuptools_scm]
@@ -36,9 +35,5 @@ testpaths = [
 [tool.coverage.run]
 omit=["_version.py"]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["config_pearl*"]
-
 [tool.setuptools.package-data]
-"*" = ["support_data/**/*"]
+"config_pearl" = ["support_data/**/*", "configs/**/*.toml"]
