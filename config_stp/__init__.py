@@ -2,7 +2,7 @@ import importlib.metadata
 from .config_loader import load_config_values
 from pathlib import Path
 
-__version__ = importlib.metadata.version(__package__ or "config_pearl")
+__version__ = importlib.metadata.version(__package__ or "config_stp")
 
 def get_data_path():
     package_root = Path(__file__).parent.resolve()

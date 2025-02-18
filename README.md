@@ -1,6 +1,8 @@
-# config_pearl
+# config_stp
 
-The [main](https://github.com/uasal/config_pearl/tree/main) branch of this repo is under STP change control. The [develop](https://github.com/uasal/config_pearl/tree/develop) branch is currently the default to enable rapid development of systems engineering budgets but the default will be changed to main once baseline observatory design is frozen. Changes to main require code owner approval, changes to the develop branch require approval of two other team members.
+Space Telescope Pathfinder repository for support data and configuration management as an installable python package 
+ 
+The [main](https://github.com/uasal/config_stp/tree/main) branch of this repo is under STP change control. The [develop](https://github.com/uasal/config_stp/tree/develop) branch is currently the default to enable rapid development of systems engineering budgets but the default will be changed to main once baseline observatory design is frozen. Changes to main require code owner approval, changes to the develop branch require approval of two other team members.
 
 Details on the change control process are found in the [coronograph design documentation repository](https://github.com/uasal/spacecoron_design_docs)
 
@@ -15,14 +17,14 @@ The example demonstrates how to load the TOML parameter files in a Python script
 TOML files are human readible configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
 
 ## Dependencies
-config_pearl is dependent on [utils_config](https://github.com/uasal/utils_config) so please verify installation of that tool first: 
+config_stp is dependent on [utils_config](https://github.com/uasal/utils_config) so please verify installation of that tool first: 
 
 ## Installation
 
 ### **1. Clone the Repository**
 ```sh
-git clone git@github.com:uasal/config_pearl.git
-cd config_pearl
+git clone git@github.com:uasal/config_stp.git
+cd config_stp
 ```
 
 ### **2. Install the Package**
@@ -31,10 +33,10 @@ pip install .
 ```
 
 ## Usage
-config_pearl makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml filies
+config_stp makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml filies
 ```python
-import config_pearl
-data = config_pearl.load_config_values()
+import config_stp
+data = config_stp.load_config_values()
 print(data["observatory"]["pointing"]["jitter_rms"])
 ```
 
@@ -43,10 +45,10 @@ load_config_values() has a default argument of 'raw' or alternatively pass in on
 - `load_config_values('parsed')` -> {'value': 0.01, 'unit': 'arcsecond'}
 - `load_config_values('raw')` -> 10e-3arcsecond
 
-For importing data and keeping code consistent across installs, config_pearl will return the path to support_data with `get_data_path()`
+For importing data and keeping code consistent across installs, config_stp will return the path to support_data with `get_data_path()`
 ```python
-import config_pearl
-data_path = config_pearl.get_data_path()
+import config_stp
+data_path = config_stp.get_data_path()
 print(data_path)
 ``` 
 

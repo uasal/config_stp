@@ -1,6 +1,6 @@
 # This is the refactored TOML baseline observatory configuration in SI units
 
-description = "Pearl Spacecraft Baseline Configuration"
+description = "STP Spacecraft Baseline Configuration"
 
 [pointing]
 jitter_rms = '10e-3arcsecond'
