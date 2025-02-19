@@ -17,18 +17,19 @@ The example demonstrates how to load the TOML parameter files in a Python script
 TOML files are human readible configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
 
 ## Dependencies
-config_stp is dependent on [utils_config](https://github.com/uasal/utils_config) so please verify installation of that tool first: 
+config_stp is dependent on [utils_config](https://github.com/uasal/utils_config) but will be automatically installed. 
 
 ## Installation
 
-### **1. Clone the Repository**
+### Pip-based install
+```sh
+pip install git+ssh://git@github.com/uasal/config_stp.git
+```
+
+### Installed via cloning
 ```sh
 git clone git@github.com:uasal/config_stp.git
 cd config_stp
-```
-
-### **2. Install the Package**
-```sh
 pip install .
 ```
 
