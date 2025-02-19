@@ -20,6 +20,7 @@ TOML files are human readible configuration files that can be read with a range 
 config_stp is dependent on [utils_config](https://github.com/uasal/utils_config) but will be automatically installed. 
 
 ## Installation
+ssh keys are required for the pip-based install. Verify you have ssh keys installed in GitHub, or check out this [ssh key tutorial](https://github.com/uasal/lab_documents/blob/main/ssh_key_tutorial.md)
 
 ### Pip-based install
 ```sh
