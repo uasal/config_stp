@@ -17,19 +17,11 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Uninstall old package versions
-      run: |
-        pip uninstall -y config_stp config_pearl
-
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest toml
-
-    - name: Force Install Package
-      run: |
-        pip install --no-cache-dir --force-reinstall .
 
     - name: Run Tests and Save Results
       id: pytest_results
