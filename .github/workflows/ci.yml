@@ -23,6 +23,10 @@ jobs:
         pip install -r requirements.txt
         pip install pytest toml
 
+    - name: Force Install Package
+      run: |
+        pip install --no-cache-dir --force-reinstall .
+
     - name: Run Tests and Save Results
       id: pytest_results
       run: |
