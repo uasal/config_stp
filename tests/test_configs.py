@@ -5,13 +5,12 @@ import astropy.units as u
 
 from utils_config import ConfigLoader
 
-# Use the package's own path to locate the configs directory
 CONFIGS_PATH = Path(config_stp.__file__).parent / "configs"
 
 def test_load_configs_valid():
     """
     Test that all TOML files in the package's 'configs' directory are valid.
-    If any file is malformed, ConfigLoader.load_configs() will raise an error, causing the test to fail.
+    If any file is malformed, ConfigLoader.load_configs() raises an error, causing the test to fail.
     """
     loader = ConfigLoader(str(CONFIGS_PATH), mode="parsed", recursive=False)
     try:
@@ -46,8 +45,8 @@ def test_units_valid():
                     check_units(value)
         elif isinstance(data, list):
             for item in data:
+                # Recursively check units in lists
                 check_units(item)
-        # Ignore any other types
 
     for config in configs.values():
         check_units(config)
