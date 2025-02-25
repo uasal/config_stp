@@ -1,7 +1,6 @@
 import pytest
 import config_stp
 from pathlib import Path
-import astropy.units as u
 
 from utils_config import ConfigLoader
 
