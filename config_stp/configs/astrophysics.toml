@@ -1,3 +1,9 @@
 [zodi]
-profile='support_data/zodi_profile'
+profile='support_data/astrophysics/zodiacal_model_001.fits'
 zodi_mag_r='22.5' #  L3-0016 has v-band mag of 22.1. Need trace of where 22.5 originates from.
+
+# The file has been taken from the SALTShaker github repo. This is an updated version of the templates originally published in Hsiao+ 2007.
+# SALTShaker file (as of 2/25/25) - https://github.com/djones1040/SALTShaker/blob/main/saltshaker/initfiles/hsiao07.dat
+# Paper - https://ui.adsabs.harvard.edu/abs/2007ApJ...663.1187H/abstract
+[sources]
+supernova_templates='support_data/astrophysics/hsiao07.dat'
