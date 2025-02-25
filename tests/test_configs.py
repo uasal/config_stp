@@ -19,35 +19,11 @@ def test_load_configs_valid():
         pytest.fail(f"Failed to load TOML configs: {e}")
     assert configs, "No configuration files were loaded."
 
-def test_units_valid():
+def test_astropy_units():
     """
-    Test that all unit strings in the parsed configuration files are valid Astropy units.
-    The test recursively checks the configuration dictionary, and if a dictionary with 'value'
-    and 'unit' keys is found, it attempts to create an Astropy Unit from the 'unit' string.
+    Test that all unit strings in the parsed configuration files ("parsed" format) are valid Astropy units.
+    uses the ConfigLoader class + validate_astropy() method to parse configs installed in this package
+    and then return either [] for no errors (passing assert), or a list containing information on each violation
     """
-    loader = ConfigLoader(str(CONFIGS_PATH), mode="parsed", recursive=False)
-    try:
-        configs = loader.load_configs()
-    except Exception as e:
-        pytest.fail(f"Failed to load TOML configs: {e}")
-
-    def check_units(data):
-        if isinstance(data, dict):
-            # Check 'unit' in 'value' 'unit' pair. Relies on ConfigLoader parsing units out correctly
-            if "value" in data and "unit" in data:
-                unit_str = data["unit"]
-                try:
-                    u.Unit(unit_str)  # Raise an exception if the unit is invalid
-                except Exception as e:
-                    pytest.fail(f"Invalid unit '{unit_str}': {e}")
-            else:
-                for value in data.values():
-                    check_units(value)
-        elif isinstance(data, list):
-            for item in data:
-                # Recursively check units in lists
-                check_units(item)
-
-    for config in configs.values():
-        check_units(config)
-
+    errors = config_stp.load_config_values("parsed", return_loader=True).validate_astropy()
+    assert errors == [], "Invalid astropy units found:\n" + "\n".join(errors)
