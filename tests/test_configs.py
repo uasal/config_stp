@@ -25,4 +25,4 @@ def test_astropy_units():
     and then return either [] for no errors (passing assert), or a list containing information on each violation
     """
     errors = config_stp.load_config_values("parsed", return_loader=True).validate_astropy()
-    assert errors == [], "Invalid astropy units found:\n" + "\n".join(errors)
+    assert errors == True, "Invalid astropy units found:\n" + "\n".join(errors)
