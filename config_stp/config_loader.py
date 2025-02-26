@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from utils_config import ConfigLoader
 
-def load_config_values(value="raw"):
+def load_config_values(value="raw", return_loader=False):
     package_root = Path(__file__).parent.resolve()
     config_dir = package_root / "configs"
 
@@ -10,4 +10,8 @@ def load_config_values(value="raw"):
         raise FileNotFoundError(f"Config directory not found: {config_dir}")
 
     loader = ConfigLoader(str(config_dir), value, recursive=True)
-    return loader.load_configs()
+    loader.load_configs()
+    if return_loader:
+        return loader # return to grant access to methods like validate_astropy() 
+    else:
+        return loader.config_data # return just the data (default)
