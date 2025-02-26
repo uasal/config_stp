@@ -11,6 +11,7 @@ requires-python = ">=3.8"
 dependencies = [
     "utils_config @ git+https://github.com/uasal/utils_config.git@develop"
 ]
+
 dynamic = ["version"]
 
 [project.urls]

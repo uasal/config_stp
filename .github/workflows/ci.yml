@@ -22,13 +22,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest toml
+   
+    - name: Install Package
+      run: |
+        pip install .
 
     - name: Run Tests and Save Results
       id: pytest_results
       run: |
         pytest tests/ --tb=short --maxfail=1 --junitxml=report.xml | tee pytest_output.txt
 
-        # Extract test counts from pytest output
         PASSED=$(python -c "import re; f=open('pytest_output.txt').read(); match=re.search(r'(\d+) passed', f); print(match.group(1) if match else '0')")
         FAILED=$(grep -oP '\d+(?= failed)' pytest_output.txt || echo "0")
-
