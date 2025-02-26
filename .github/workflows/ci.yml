@@ -23,10 +23,9 @@ jobs:
         pip install -r requirements.txt
         pip install pytest toml
    
-
    - name: Install Package
      run: |
-       pip install .
+        pip install .
 
     - name: Run Tests and Save Results
       id: pytest_results
