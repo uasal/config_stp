@@ -22,7 +22,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest toml
-    
+   
+
+   - name: Install Package
+     run: |
+       pip install .
+
     - name: Run Tests and Save Results
       id: pytest_results
       run: |
