@@ -11,7 +11,7 @@ def get_data_path():
     if not data_path.exists():
         raise FileNotFoundError(f"Support data directory not found: {data_path}")
 
-    return str(data_path)
+    return str(data_path) + "/"
 
 __all__ = ["load_config_values", "get_data_path", "__version__"]
 
