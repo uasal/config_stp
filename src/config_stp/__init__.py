@@ -1,4 +1,5 @@
 import importlib.metadata
+import importlib.resources as resources
 from .config_loader import load_config_values
 from pathlib import Path
 
