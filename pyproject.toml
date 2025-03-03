@@ -11,7 +11,6 @@ requires-python = ">=3.8"
 dependencies = [
     "utils_config @ git+https://github.com/uasal/utils_config.git@develop"
 ]
-
 dynamic = ["version"]
 
 [project.urls]
@@ -21,20 +20,22 @@ Repository = "https://github.com/uasal/config_stp"
 
 [tool.setuptools]
 packages = ["config_stp"]
+package-dir = { "" = "src" }
 include-package-data = true
 
 [tool.setuptools_scm]
-write_to = "config_stp/_version.py"
+write_to = "src/config_stp/_version.py"
 version_scheme = "post-release"
 local_scheme = "node-and-date"
 
 [tool.pytest.ini_options]
 testpaths = [
-	"tests",
+    "tests",
 ]
 
 [tool.coverage.run]
-omit=["config_stp/_version.py"]
+omit = ["src/config_stp/_version.py"]
 
 [tool.setuptools.package-data]
 "config_stp" = ["support_data/**/*", "configs/**/*.toml"]
+
