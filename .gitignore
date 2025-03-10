@@ -39,6 +39,7 @@ coverage.xml
 *.sublime-workspace
 
 # Git LFS (if using for large files)
+*.fits
 *.hdf5
 *.h5
 
