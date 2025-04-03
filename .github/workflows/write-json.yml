@@ -1,0 +1,40 @@
+name: Auto Update JSON Config Output For Matlab Compatibility
+
+on:
+  push:
+    paths:
+      - '**.toml'          # Trigger only when TOMLs change
+  workflow_dispatch:      
+
+jobs:
+  update-parsed-config:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install Package
+      run: |
+        pip install .
+
+    - name: Run json script
+      run: python scripts/config_to_json.py
+
+    - name: Commit updated JSON if it changed
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@users.noreply.github.com"
+        git add outputs/parsed_config.json
+        if git diff --cached --quiet; then
+          echo "No changes to commit."
+        else
+          git commit -m "Auto-update parsed_config.json from TOML changes"
+          git push
+        fi
+
