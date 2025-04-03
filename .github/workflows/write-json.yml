@@ -30,11 +30,11 @@ jobs:
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@users.noreply.github.com"
-        git add outputs/parsed_config.json
+        git add outputs/config_stp.json
         if git diff --cached --quiet; then
           echo "No changes to commit."
         else
-          git commit -m "Auto-update parsed_config.json from TOML changes"
+          git commit -m "Auto-update config_stp.json from TOML changes"
           git push
         fi
 

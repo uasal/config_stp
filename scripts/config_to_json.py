@@ -4,7 +4,6 @@ from pathlib import Path
 import config_stp
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "src"))
 
 def main():
     output_path = ROOT / "outputs" / "config_stp.json"
