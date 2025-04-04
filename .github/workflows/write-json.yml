@@ -3,7 +3,7 @@ name: Auto Update JSON Config Output For Matlab Compatibility
 on:
   push:
     branches:
-      - develop
+      - adamschilperoort/add_json_output
     paths:
       - '**/*.toml'
   workflow_dispatch:
