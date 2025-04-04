@@ -42,7 +42,6 @@ coverage.xml
 *.fits
 *.hdf5
 *.h5
-*.fits2
 
 # Ignore Python package files that are generated
 config_stp.egg-info/
