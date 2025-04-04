@@ -36,13 +36,10 @@ jobs:
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@users.noreply.github.com"
 
-        # Create or switch to compiled-develop branch
         git checkout -B compiled-develop
 
-        # Stage the output file
-        git add outputs/config_stp.json
+        git add src/config_stp/configs/config_stp.json
 
-        # Only commit and push if there are changes
         if git diff --cached --quiet; then
           echo "No changes to commit."
         else
