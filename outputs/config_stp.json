@@ -27,11 +27,11 @@
           "value": 1.38,
           "unit": "m"
         },
-        "surf_rms": {
+        "surface_rms": {
           "value": 2.1e-08,
           "unit": "m"
         },
-        "surf_rms_goal": {
+        "surface_rms_goal": {
           "value": 9.4e-09,
           "unit": "m"
         },
@@ -159,7 +159,7 @@
   "astrophysics": {
     "zodi": {
       "profile": "astrophysics/zodiacal_model_001.fits",
-      "zodi_mag_r": "22.5"
+      "zodi_mag_r": 22.5
     },
     "sources": {
       "supernova_templates": "astrophysics/hsiao07.dat"
