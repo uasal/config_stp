@@ -37,7 +37,7 @@ jobs:
         git config --global user.email "github-actions@users.noreply.github.com"
 
         git fetch origin
-        git checkout origin/develop
+        git checkout adamschilperoort/add_json_output #origin/develop
         git switch -c compiled-develop
 
         git add src/config_stp/config/config_stp.json
