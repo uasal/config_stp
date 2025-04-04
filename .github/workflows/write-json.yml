@@ -3,7 +3,7 @@ name: Auto Update JSON Config Output For Matlab Compatibility
 on:
   push:
     branches:
-      - adamschilperoort/add_json_output
+      - develop
     paths:
       - '**/*.toml'
   workflow_dispatch:
@@ -16,8 +16,8 @@ jobs:
     - name: Checkout develop branch
       uses: actions/checkout@v3
       with:
-        ref: adamschilperoort/add_json_output #develop
-        fetch-depth: 0  # Needed to push to a different branch
+        ref: develop
+        fetch-depth: 0
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -37,7 +37,7 @@ jobs:
         git config --global user.email "github-actions@users.noreply.github.com"
 
         git fetch origin
-        git checkout adamschilperoort/add_json_output #origin/develop
+        git checkout origin/develop
         git switch -c compiled-develop
 
         git add src/config_stp/configs/config_stp.json
@@ -47,5 +47,5 @@ jobs:
           echo "No changes to commit."
         else
           git commit -m "Auto-update config_stp.json from TOML changes"
-          git push --force origin compiled-develop
+          git push --force origin compiled-develop #force in case of merge conflict (someone edited that branch)
         fi
