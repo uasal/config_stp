@@ -7,4 +7,3 @@ zodi_mag_r=22.5 # This is a Vega magnitude. L3-0016 has v-band mag of 22.1. Need
 # Paper - https://ui.adsabs.harvard.edu/abs/2007ApJ...663.1187H/abstract
 [sources]
 supernova_templates='astrophysics/hsiao07.dat'
-test=123
