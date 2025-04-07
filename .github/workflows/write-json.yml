@@ -2,14 +2,12 @@ name: Auto Update JSON Config Output For Matlab Compatibility
 
 on:
   push:
-    branches:
-      - develop
     paths:
       - '**/*.toml'
   workflow_dispatch:
 
 jobs:
-  update-parsed-config:
+  generate-parsed-config:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +30,7 @@ jobs:
       run: python scripts/config_to_json.py
 
     - name: Commit and push to compiled-develop if changed
+      if: if: ${github.ref == 'refs/heads/develop'}
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@users.noreply.github.com"

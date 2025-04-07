@@ -10,6 +10,7 @@ def main():
     data = config_stp.load_config_values('parsed')
     with output_path.open("w") as f:
         json.dump(data, f, indent=2)
+    print(data)
 
 if __name__ == "__main__":
     main()
