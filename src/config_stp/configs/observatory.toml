@@ -19,4 +19,5 @@ offset_measure_time_fine = "10second" # TBR from mission lifetime budget
 offset_measure_time_coarse = "60second" # TBR from mission lifetime budget
 
 [general]
-mission_length = "3year" # from L0-0009
+mission_length = "3year" # from L0-000i9
+test=123

@@ -29,21 +29,16 @@ jobs:
       run: python scripts/config_to_json.py
 
     - name: Commit and push to compiled-develop if changed
-      if: github.ref == 'refs/heads/develop'
+      if: github.ref == 'refs/heads/adamschilperoort/add_json_output'
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@users.noreply.github.com"
-
-        git fetch origin
-        git checkout origin/develop
-        git switch -c compiled-develop
-
-        git add src/config_stp/configs/config_stp.json
-
-        # Only commit and push if there are changes
-        if git diff --cached --quiet; then
-          echo "No changes to commit."
-        else
-          git commit -m "Auto-update config_stp.json from TOML changes"
-          git push --force origin compiled-develop #force in case of merge conflict (someone edited that branch)
-        fi
+          git fetch origin compiled-develop  --recurse-submodules=no
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git branch --track compiled-develop origin/compiled-develop
+          mkdir output
+          git worktree add output compiled-develop
+          mv src/config_stp/configs/config_stp.json output/config_stp.json
+          cd output
+          git add .
+          git commit -m "update JSON config parsed from TOML changes"
+          git push
