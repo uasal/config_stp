@@ -29,7 +29,7 @@ jobs:
       run: python scripts/config_to_json.py
 
     - name: Commit and push to compiled-develop if changed
-      if: github.ref == 'refs/heads/adamschilperoort/add_json_output'
+      if: github.ref == 'refs/heads/develop'
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@users.noreply.github.com"

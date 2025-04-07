@@ -55,7 +55,6 @@ temp_nominal_delta = '10Kelvin' # WAG
 temp_stability = '0.05Kelvin/hour' # WAG
 coating_refl = "coatings/NIST_1st_surface_Al.csv" # NIST reference curve for aged bare aluminum reflectivity
 coating_refl_rms = 0.005
-test=123
 
 # quaternary mirror properties
 [optics.m4]
