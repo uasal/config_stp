@@ -35,10 +35,6 @@ jobs:
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git branch --track compiled-develop origin/compiled-develop
-          mkdir output
-          git worktree add output compiled-develop
-          mv src/config_stp/configs/config_stp.json output/config_stp.json
-          cd output
-          git add .
+          git add src/config_stp/configs/config_stp.json
           git commit -m "update JSON config parsed from TOML changes"
           git push
