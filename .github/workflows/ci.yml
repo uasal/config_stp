@@ -19,10 +19,8 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest toml
-   
+        pip install pytest
+
     - name: Install Package
       run: |
         pip install .
