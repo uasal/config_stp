@@ -1,5 +1,9 @@
 # config_stp
 
+[![Auto Update JSON Config Output For Matlab Compatibility](https://github.com/uasal/config_stp/actions/workflows/write-json.yml/badge.svg)](https://github.com/uasal/config_stp/actions/workflows/write-json.yml)
+
+This is the a compiled branch based off of configs in the `develop` branch. If you would like to modify a config, do your edits as a branch off of develop and open a pull request.
+
 Space Telescope Pathfinder repository for support data and configuration management as an installable python package 
  
 The [main](https://github.com/uasal/config_stp/tree/main) branch of this repo is under STP change control. The [develop](https://github.com/uasal/config_stp/tree/develop) branch is currently the default to enable rapid development of systems engineering budgets but the default will be changed to main once baseline observatory design is frozen. Changes to main require code owner approval, changes to the develop branch require approval of two other team members.
