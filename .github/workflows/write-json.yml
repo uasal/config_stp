@@ -34,7 +34,9 @@ jobs:
           git fetch origin compiled-develop  --recurse-submodules=no
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
+          mv src/config_stp/configs/config_stp.json config_stp.json.tmp
           git checkout compiled-develop
+          mv config_stp.json.tmp src/config_stp/configs/config_stp.json
           git add src/config_stp/configs/config_stp.json
           git commit -m "update JSON config parsed from TOML changes"
           git push
