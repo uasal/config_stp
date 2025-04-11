@@ -4,8 +4,18 @@ description = "STP Spacecraft Baseline Configuration"
 
 [pointing]
 jitter_rms = '10e-3arcsecond'
-field_of_regard_min = ''
-field_of_regard_max = ''
+#field_of_regard_min = ''
+#field_of_regard_max = ''
+# EDIT: Nick Schragal - Replacing fixed field of regard for individual fields of
+#                       regard for Sun, Moon, Earth, and small bodies. Assuming same
+#                       solar field of regard as Roman, assuming keep-out of 
+#                       10 degrees for Moon and Earth for now, assuming no keep-out 
+#                       necessary for what EXOSIMS defines as small bodies.
+#                       Roman field of regard: https://roman.gsfc.nasa.gov/science/WFI_technical.html
+field_of_regard_sun = ["54deg", "126deg"]
+field_of_regard_moon = ["10deg", "180deg"]
+field_of_regard_earth = ["10deg", "180deg"]
+field_of_regard_small_bodies = ["0deg", "180deg"]
 
 [motion]
 slew_settle_time_small = "5minutes" # from L3-7009
