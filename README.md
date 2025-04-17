@@ -56,22 +56,7 @@ print(data_path)
 
 ### Version Reporting
 
-For the reporting configuration versions in analyses (to aid in repeatability), a tool is available inside [utils_config](https://github.com/uasal/utils_config) that can be run as follows:
-```python
-import utils_config
-summary = utils_config.check_imports_and_versions(globals().items())
-```
-It reports a table of installed packages as follows:
-```markdown
-Module         Imported Installed_Version    Branch                   is_dirty()?
--------------- -------- -------------------- ------------------------ -----------
-config_stp     True     0.0.post107+g6bba4a8 pingraham/rms_naming_fix False      
-config_um      True     0.0.post3+g9daa3b7   develop                  False      
-config_stp_wcc False    Not_Installed        N/A                      False      
-config_stp_esc False    Not_Installed        N/A                      False      
-etc_wcc        False    Not_Installed        N/A                      False      
-etc_esc        False    Not_Installed        N/A                      False 
-```
+For the reporting configuration versions in analyses (to aid in repeatability), the method `check_imports_and_versions` is available inside [utils_config](https://github.com/uasal/utils_config) that generates a nice summary. 
 
 ## Astropy Unit Validation
 
