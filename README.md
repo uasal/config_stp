@@ -54,6 +54,10 @@ data_path = config_stp.get_data_path()
 print(data_path)
 ```
 
+### Version Reporting
+
+For the reporting configuration versions in analyses (to aid in repeatability), the method `check_imports_and_versions` is available inside [utils_config](https://github.com/uasal/utils_config) that generates a nice summary. 
+
 ## Astropy Unit Validation
 
 All .toml config values should have a valid astropy unit if any units are defined. If no unit is included, the value is assumed to be unitless. A GitHub CI will automatically run a test on push to validate astropy units in the configs, reporting any issues with non-conforming astropy units. If you'd like to perform validation locally, you may run `pytest tests/test_configs.py` from the root directory of the repo. Alternatively in your python environment you may run the following snippit:
