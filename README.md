@@ -1,6 +1,7 @@
 # config_stp
 
-Space Telescope Pathfinder repository for support data and configuration management as an installable python package 
+Space Telescope Pathfinder repository for support data and configuration management as an installable python package.
+The repository supersedes the stp_reference_data (private) repository which is now deprecated and soon to be archived.
  
 The [main](https://github.com/uasal/config_stp/tree/main) branch of this repo is under STP change control. The [develop](https://github.com/uasal/config_stp/tree/develop) branch is currently the default to enable rapid development of systems engineering budgets but the default will be changed to main once baseline observatory design is frozen. Changes to main require code owner approval, changes to the develop branch require approval of two other team members.
 
@@ -12,9 +13,9 @@ This includes details of the telescope optical system, such as coatings and sens
 A synthetic dataset regarding the timeseries for the wavefront error due the thermal effects is also available.
 
 The parameters for each subsystem are found in the `configs` directory.
-A description of how configurations are used in UASAL software, users can find an example notebook in the `docs` directory of the  [config_project_template](https://github.com/uasal/config_project_template) repository. 
+A description of how configurations are used in UASAL software, users can find an example notebook in the  [config_project_template](https://github.com/uasal/config_project_template) repository. 
 The example demonstrates how to load the TOML parameter files in a Python script.
-TOML files are human readible configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
+TOML files are human readable configuration files that can be read with a range of parsers https://github.com/toml-lang/toml/wiki
 
 ## Dependencies
 config_stp is dependent on [utils_config](https://github.com/uasal/utils_config) but will be automatically installed. 
@@ -35,7 +36,7 @@ pip install .
 ```
 
 ## Usage
-config_stp makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml filies
+config_stp makes usage of the ConfigLoader class (as *config_loader*) from utils_config via the `load_config_values` method, which accepts 'raw' 'parsed' or 'unitless' as an argument, returning a dictionary after parsing the 'configs' directory for .toml files.
 ```python
 import config_stp
 data = config_stp.load_config_values()
@@ -60,7 +61,7 @@ For the reporting configuration versions in analyses (to aid in repeatability), 
 
 ## Astropy Unit Validation
 
-All .toml config values should have a valid astropy unit if any units are defined. If no unit is included, the value is assumed to be unitless. A GitHub CI will automatically run a test on push to validate astropy units in the configs, reporting any issues with non-conforming astropy units. If you'd like to perform validation locally, you may run `pytest tests/test_configs.py` from the root directory of the repo. Alternatively in your python environment you may run the following snippit:
+All .toml config values should have a valid astropy unit if any units are defined. If no unit is included, the value is assumed to be unitless. A GitHub CI will automatically run a test on push to validate astropy units in the configs, reporting any issues with non-conforming astropy units. If you'd like to perform validation locally, you may run `pytest tests/test_configs.py` from the root directory of the repo. Alternatively in your python environment you may run the following snippet:
 ```python
 import config_stp
 config_stp.load_config_values("parsed", return_loader=True).validate_astropy()
@@ -71,7 +72,7 @@ nit, click [here](https://docs.astropy.org/en/stable/units/combining_and_definin
 ## Git large file storage (LFS)
 
 This repository makes use of the git large file storage for files listed in the `.gitattributes` file.
-Accessing these files will require users having (Git Large File Storage (LFS))[https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage] installed on their local machine.
+Accessing these files will require users having [Git Large File Storage (LFS)](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed on their local machine.
 
 If you have Git LFS installed, then the large files will be pulled by default.
-This can be disabled in your gitconfig, as described (at this link)[https://stackoverflow.com/questions/42019529/how-to-clone-pull-a-git-repository-ignoring-lfs].
+This can be disabled in your gitconfig, as described [at this link](https://stackoverflow.com/questions/42019529/how-to-clone-pull-a-git-repository-ignoring-lfs).

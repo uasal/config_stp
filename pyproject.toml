@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "config_stp"
-description = "Master config loader for stp project at UASAL"
+description = "Configuration repository for the Space Telescope Pathfinder (STP)."
 readme = "README.md"
 license = { text = "GNU GENERAL PUBLIC LICENSE - Verison 3" }
 requires-python = ">=3.8"
