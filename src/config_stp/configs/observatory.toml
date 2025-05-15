@@ -1,0 +1,25 @@
+# This is the refactored TOML baseline observatory configuration in SI units
+
+description = "STP Spacecraft Baseline Configuration"
+
+[pointing]
+jitter_rms = '10e-3arcsecond'
+field_of_regard_sun = ["60deg", "130deg"] # Flows from L1-0014
+field_of_regard_sun_goal = ["54deg", "150deg"] # Flows from L1-0014
+field_of_regard_moon = ["10deg", "180deg"] # Assumption (WAG by Nick Schragal) 
+field_of_regard_earth = ["10deg", "180deg"] # Assumption (WAG by Nick Schragal)
+field_of_regard_small_bodies = ["0deg", "180deg"] # assuming no keep-out necessary for small bodies (as defined by EXOSIMS).
+
+[motion]
+slew_settle_time_small = "5minute" # from L3-7009
+slew_settle_time_large = "90minute" # from transient response budget (TBR)
+slew_avg_speed = "0.44 degree/second" # estimate from JDP, does not include settling
+
+[acquisition]
+offset_motion_time_fine = "30second" # TBR from mission lifetime budget
+offset_motion_time_coarse = "120second" # TBR from mission lifetime budget
+offset_measure_time_fine = "10second" # TBR from mission lifetime budget
+offset_measure_time_coarse = "60second" # TBR from mission lifetime budget
+
+[general]
+mission_length = "3year" # from L0-0009

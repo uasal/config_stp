@@ -1,0 +1,34 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  check-tomls-python3-12:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install Dependencies
+      run: |
+        pip install pytest
+
+    - name: Install Package
+      run: |
+        pip install .
+
+    - name: Run Tests and Save Results
+      id: pytest_results
+      run: |
+        pytest tests/ --tb=short --maxfail=1 --junitxml=report.xml | tee pytest_output.txt
+
+        PASSED=$(python -c "import re; f=open('pytest_output.txt').read(); match=re.search(r'(\d+) passed', f); print(match.group(1) if match else '0')")
+        FAILED=$(grep -oP '\d+(?= failed)' pytest_output.txt || echo "0")

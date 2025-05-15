@@ -1,0 +1,42 @@
+name: Auto Update JSON Config Output For Matlab Compatibility
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '**/*.toml'
+  workflow_dispatch:
+
+jobs:
+  generate-parsed-config:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install Package
+      run: |
+        pip install .
+
+    - name: Run JSON script
+      run: python scripts/config_to_json.py
+
+    - name: Commit and push to compiled-develop if changed
+      if: github.ref == 'refs/heads/develop'
+      run: |
+          git fetch origin compiled-develop  --recurse-submodules=no
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          mv src/config_stp/configs/config_stp.json config_stp.json.tmp
+          git checkout compiled-develop
+          mv config_stp.json.tmp src/config_stp/configs/config_stp.json
+          git add src/config_stp/configs/config_stp.json
+          git commit -m "update JSON config parsed from TOML changes"
+          git push

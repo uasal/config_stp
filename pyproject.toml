@@ -1,3 +1,41 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "setuptools-scm", "wheel"]
 build-backend = "setuptools.build_meta" 
+
+[project]
+name = "config_stp"
+description = "Configuration repository for the Space Telescope Pathfinder (STP)."
+readme = "README.md"
+license = { text = "GNU GENERAL PUBLIC LICENSE - Verison 3" }
+requires-python = ">=3.8"
+dependencies = [
+    "utils_config @ git+https://github.com/uasal/utils_config.git@develop"
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/uasal/config_stp/blob/main/README.md"
+Changelog = "https://github.com/uasal/config_stp/blob/main/CHANGELOG.md"
+Repository = "https://github.com/uasal/config_stp"
+
+[tool.setuptools]
+packages = ["config_stp"]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools_scm]
+write_to = "src/config_stp/_version.py"
+version_scheme = "post-release"
+local_scheme = "node-and-date"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+omit = ["src/config_stp/_version.py"]
+
+[tool.setuptools.package-data]
+"config_stp" = ["support_data/**/*", "configs/**/*.toml"]
+
