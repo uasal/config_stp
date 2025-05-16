@@ -7,10 +7,10 @@ The [main](https://github.com/uasal/config_stp/tree/main) branch of this repo is
 
 Details on the change control process are found in the [coronograph design documentation repository](https://github.com/uasal/spacecoron_design_docs)
 
-This repository contains reference data for the observatory and telescope.
-The data in the repository is intended to encapsulate all parameters which represent the high-level system and are to be identical when called by the the various tools/simulators.
-This includes details of the telescope optical system, such as coatings and sensors, and observatory properties such as slew times.
-A synthetic dataset regarding the timeseries for the wavefront error due the thermal effects is also available.
+This repository contains reference data for a conceptual observatory and telescope roughly corresponding to the design presented in Kim et al 2023 (https://arxiv.org/abs/2309.04921).
+The data in the repository is intended to encapsulate all parameters which represent the high-level system and are to be identical when called by the the various science tools/simulators.
+This includes assumptions regarding the telescope optical system, such as coatings and sensors, and observatory constraints, such as slew times.
+A synthetic dataset regarding the timeseries for the wavefront error due the thermal effects is also available as described in Douglas et al 2023 (https://arxiv.org/abs/2309.04934).
 
 The parameters for each subsystem are found in the `configs` directory.
 A description of how configurations are used in UASAL software, users can find an example notebook in the  [config_project_template](https://github.com/uasal/config_project_template) repository. 
